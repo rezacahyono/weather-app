@@ -1,3 +1,43 @@
 <resources>
     <string name="app_name">weather</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="clear_sky">Clear sky</string>
+    <string name="mainly_clear">Mainly clear</string>
+    <string name="partly_cloudy">Partly cloudy</string>
+    <string name="over_cast">Overcast</string>
+    <string name="foggy">Foggy</string>
+    <string name="depositing_rime_fog">Depositing rime fog</string>
+    <string name="light_drizzle">Light drizzle</string>
+    <string name="moderate_drizzle">Moderate drizzle</string>
+    <string name="dense_drizzle">Dense drizzle</string>
+    <string name="light_freezing_drizzle">light freezing drizzle</string>
+    <string name="dense_freezing_drizzle">Dense freezing drizzle</string>
+    <string name="light_rain">Light rain</string>
+    <string name="moderate_rain">Rainy</string>
+    <string name="heavy_rain">Heavy rain</string>
+    <string name="heavy_freezing_rain">Heavy freezing rain</string>
+    <string name="light_snow_fall">Light snow fall</string>
+    <string name="moderate_snow_fall">Moderate snow fall</string>
+    <string name="heavy_snow_fall">Heavy snow fall</string>
+    <string name="snow_grains">Snow grains</string>
+    <string name="light_rain_showers">Light rain showers</string>
+    <string name="moderate_rain_showers">Moderate rain showers</string>
+    <string name="violent_rain_showers">Violent rain showers</string>
+    <string name="ligth_snow_showers">Light snow showers</string>
+    <string name="heavy_snow_showers">Heavy snow showers</string>
+    <string name="moderate_thunder_storm">Moderate thunder storm</string>
+    <string name="light_hail_thunder_storm">Light hail thunder storm</string>
+    <string name="heavy_hail_thunder_storm">Heavy hail thunder storm</string>
+    <string name="icon_weather">Icon weather</string>
+
+    <string name="temp">%s°</string>
+    <string name="today">Today | %s</string>
+    <string name="feels_like">Feels like %s</string>
+    <string name="humidity">Humidity %s\%%</string>
+    <string name="wind_speed">Wind speed %skm/h</string>
+
+    <string name="location_name">%s, %s</string>
+
 </resources>

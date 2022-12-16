@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Card-->
+    <style name="Widget.Weather.Card.Elevated" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">0.5dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.ExtraLarge</item>
+    </style>
+
+</resources>
