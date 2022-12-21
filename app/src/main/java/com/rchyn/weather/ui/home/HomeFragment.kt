@@ -72,7 +72,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-
         setupRecyclerWeathers()
     }
 
