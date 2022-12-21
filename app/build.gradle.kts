@@ -55,6 +55,11 @@ dependencies {
     // Material Design
     implementation("com.google.android.material:material:1.7.0")
 
+    // Shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
+
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
     // Constraint Layout
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 

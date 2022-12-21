@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Material3.CardView.Outlined"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Large">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/medium_padding">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height_medium"
+            android:contentDescription="@string/placeholder"
+            android:src="?attr/colorSecondaryContainer"
+            app:layout_constraintBottom_toTopOf="@id/placeholder_tv_temperature"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_iv_icon_temperature"
+            android:layout_width="@dimen/size_icon"
+            android:layout_height="@dimen/size_icon"
+            android:layout_marginEnd="@dimen/small_padding"
+            android:src="?attr/colorSecondaryContainer"
+            app:layout_constraintBottom_toBottomOf="@id/placeholder_tv_temperature"
+            app:layout_constraintEnd_toStartOf="@id/placeholder_tv_temperature"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/placeholder_tv_temperature"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_tv_temperature"
+            android:layout_width="@dimen/line_height_double_extra_large"
+            android:layout_height="@dimen/line_height_double_extra_large"
+            android:layout_marginStart="@dimen/small_padding"
+            android:layout_marginTop="@dimen/small_padding"
+            android:src="?attr/colorSecondaryContainer"
+            app:layout_constraintBottom_toTopOf="@id/placeholder_tv_weather_desc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/placeholder_iv_icon_temperature"
+            app:layout_constraintTop_toBottomOf="@id/placeholder_tv_date"
+            app:layout_goneMarginTop="@dimen/small_padding"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_tv_weather_desc"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height_large"
+            android:layout_marginTop="@dimen/small_padding"
+            android:contentDescription="@string/placeholder"
+            android:src="?attr/colorSecondaryContainer"
+            app:layout_constraintBottom_toTopOf="@id/placeholder_tv_location_name"
+            app:layout_constraintTop_toBottomOf="@id/placeholder_tv_temperature"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_tv_location_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height_medium"
+            android:layout_marginTop="@dimen/small_padding"
+            android:contentDescription="@string/placeholder"
+            android:src="?attr/colorSecondaryContainer"
+            app:layout_constraintBottom_toTopOf="@id/placeholder_tv_wind_speed"
+            app:layout_constraintTop_toBottomOf="@id/placeholder_tv_weather_desc"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_tv_feels_like"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/line_height_medium"
+            android:contentDescription="@string/placeholder"
+            android:src="?attr/colorSecondaryContainer"
+            app:layout_constraintBottom_toBottomOf="@id/placeholder_tv_wind_speed"
+            app:layout_constraintEnd_toStartOf="@id/placeholder_tv_wind_speed"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/placeholder_tv_wind_speed"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_tv_wind_speed"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/line_height_medium"
+            android:layout_marginHorizontal="@dimen/medium_padding"
+            android:layout_marginTop="@dimen/small_padding"
+            android:contentDescription="@string/placeholder"
+            android:src="?attr/colorSecondaryContainer"
+            app:layout_constraintEnd_toStartOf="@id/placeholder_tv_humidity"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/placeholder_tv_feels_like"
+            app:layout_constraintTop_toBottomOf="@id/placeholder_tv_location_name"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_tv_humidity"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/line_height_medium"
+            android:layout_marginTop="@dimen/small_padding"
+            android:contentDescription="@string/placeholder"
+            android:src="?attr/colorSecondaryContainer"
+            app:layout_constraintBottom_toBottomOf="@id/placeholder_tv_wind_speed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/placeholder_tv_wind_speed"
+            app:layout_constraintTop_toBottomOf="@id/placeholder_tv_weather_desc"
+            app:layout_constraintTop_toTopOf="@id/placeholder_tv_wind_speed"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

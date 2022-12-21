@@ -1,35 +1,44 @@
 package com.rchyn.weather.ui.home
 
 import android.annotation.SuppressLint
-import android.location.Address
-import android.location.Geocoder
-import android.location.Geocoder.GeocodeListener
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import com.rchyn.weather.R
+import com.rchyn.weather.adapter.ListWeatherAdapter
 import com.rchyn.weather.databinding.FragmentHomeBinding
 import com.rchyn.weather.domain.model.WeatherData
+import com.rchyn.weather.ui.MainActivity
 import com.rchyn.weather.utils.formatedTime
+import com.rchyn.weather.utils.getLocationName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding as FragmentHomeBinding
 
-    private val weatherViewModel: WeatherViewModel by viewModels()
+    private val weatherViewModel: WeatherViewModel by activityViewModels()
+
+    private lateinit var act: MainActivity
+
+    private lateinit var listWeatherAdapter: ListWeatherAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        act = activity as MainActivity
+        listWeatherAdapter = ListWeatherAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,14 +55,25 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 weatherViewModel.weatherState.collect { state ->
-                    state.weatherInfo?.let {
-                        it.currentWeatherData?.let { weatherData ->
-                            setupCurrentWeather(weatherData = weatherData)
+                    when {
+                        state.isLoading -> setupShimmerCardLoading(true)
+                        state.isError -> setupShimmerCardLoading(false)
+                        state.weatherInfo != null -> {
+                            state.weatherInfo.currentWeatherData?.let { weatherData ->
+                                setupShimmerCardLoading(false)
+                                setupCurrentWeather(weatherData = weatherData)
+                            }
+
+                            state.weatherInfo.weatherDataPerDay[0]?.let { weathersData ->
+                                listWeatherAdapter.submitList(weathersData)
+                            }
                         }
                     }
                 }
             }
         }
+
+        setupRecyclerWeathers()
     }
 
 
@@ -69,33 +89,29 @@ class HomeFragment : Fragment() {
             @SuppressLint("StringFormatInvalid")
             tvHumidity.text = getString(R.string.humidity, weatherData.humidity.toInt().toString())
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                val geocoder = Geocoder(requireContext(), Locale("id", "ID"))
-
-                val geocodeListener = object : GeocodeListener {
-                    override fun onGeocode(addresses: MutableList<Address>) {
-                        tvLocationName.text = getString(
-                            R.string.location_name,
-                            addresses[0].subAdminArea,
-                            addresses[0].countryName
-                        )
-                    }
-
-                    override fun onError(errorMessage: String?) {
-                        super.onError(errorMessage)
-                        tvLocationName.isVisible = false
-                    }
-
-                }
-                geocoder.getFromLocation(
-                    weatherData.latitude,
-                    weatherData.longitude,
-                    1,
-                    geocodeListener
-                )
+            tvLocationName.apply {
+                text = requireContext().getLocationName(weatherData.latitude, weatherData.longitude)
+                isVisible =
+                    requireContext().getLocationName(weatherData.latitude, weatherData.longitude).isNotEmpty()
             }
+        }
+    }
 
-            tvLocationName.isVisible = false
+    private fun setupRecyclerWeathers() {
+        val gridLayoutManager =
+            GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
+        binding.recyclerWeather.apply {
+            layoutManager = gridLayoutManager
+            adapter = listWeatherAdapter
+        }
+    }
+
+
+    private fun setupShimmerCardLoading(isShow: Boolean) {
+        binding.shimmerCardWeather.apply {
+            if (isShow) startShimmer() else stopShimmer()
+            isVisible = isShow
+            binding.cardCurrentWeather.root.isVisible = !isShow
         }
     }
 
