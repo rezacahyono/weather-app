@@ -10,6 +10,6 @@
     <dimen name="line_height_medium">16dp</dimen>
     <dimen name="line_height_large">24dp</dimen>
     <dimen name="line_height_double_extra_large">82dp</dimen>
-
+    
     <dimen name="size_icon">82dp</dimen>
 </resources>

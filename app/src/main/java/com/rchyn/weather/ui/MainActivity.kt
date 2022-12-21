@@ -15,7 +15,6 @@ import com.rchyn.weather.databinding.ActivityMainBinding
 import com.rchyn.weather.ui.home.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
