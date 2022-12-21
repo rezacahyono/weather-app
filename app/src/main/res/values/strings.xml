@@ -34,10 +34,17 @@
 
     <string name="temp">%s°</string>
     <string name="today">Today | %s</string>
-    <string name="feels_like">Feels like %s</string>
+    <string name="feels_like">Feels like %s°</string>
     <string name="humidity">Humidity %s\%%</string>
     <string name="wind_speed">Wind speed %skm/h</string>
 
     <string name="location_name">%s, %s</string>
+    
+    <string name="now">Now</string>
+    <string name="nan">-</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="setting">Setting</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
 
 </resources>

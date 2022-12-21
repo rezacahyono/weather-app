@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.Material3.CardView.Filled"
+    style="@style/Widget.Weather.Card.Filled.Large"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -15,11 +15,12 @@
             android:id="@+id/tv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/today"
+            android:text="@string/nan"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
             app:layout_constraintBottom_toTopOf="@id/tv_temperature"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/today" />
 
         <ImageView
             android:id="@+id/iv_icon_temperature"
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/small_padding"
             android:layout_marginTop="@dimen/small_padding"
+            android:text="@string/nan"
             android:textAppearance="@style/TextAppearance.Material3.DisplayLarge"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_padding"
+            android:text="@string/nan"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
             app:layout_constraintBottom_toTopOf="@id/tv_location_name"
@@ -63,67 +66,73 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_padding"
+            android:text="@string/nan"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-            app:layout_constraintBottom_toTopOf="@id/tv_feels_like"
+            app:layout_constraintBottom_toTopOf="@id/tv_wind_speed"
             app:layout_constraintTop_toBottomOf="@id/tv_weather_desc"
             tools:text="Jakarta, Indonesia" />
 
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_feels_like"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_padding"
+            android:text="@string/nan"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            app:layout_constraintBottom_toBottomOf="@id/tv_wind_speed"
             app:layout_constraintEnd_toStartOf="@id/divider"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_location_name"
+            app:layout_constraintTop_toTopOf="@id/tv_wind_speed"
             tools:text="Feels like 30" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider"
             android:layout_width="1dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/small_padding"
-            app:layout_constraintBottom_toBottomOf="@id/tv_feels_like"
+            android:layout_marginHorizontal="@dimen/extra_small_padding"
+            app:layout_constraintBottom_toBottomOf="@id/tv_wind_speed"
             app:layout_constraintEnd_toStartOf="@id/tv_wind_speed"
             app:layout_constraintStart_toEndOf="@id/tv_feels_like"
-            app:layout_constraintTop_toTopOf="@id/tv_feels_like" />
+            app:layout_constraintTop_toTopOf="@id/tv_wind_speed" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_wind_speed"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_padding"
+            android:text="@string/nan"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-            app:layout_constraintBottom_toBottomOf="@id/tv_feels_like"
             app:layout_constraintEnd_toStartOf="@id/divider1"
             app:layout_constraintStart_toEndOf="@id/divider"
-            app:layout_constraintTop_toTopOf="@id/tv_feels_like"
-            tools:text="Wind speed 12km/h" />
+            app:layout_constraintTop_toBottomOf="@id/tv_location_name"
+            tools:text="Wind speed hjh12km/h" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider1"
             android:layout_width="1dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/small_padding"
-            app:layout_constraintBottom_toBottomOf="@id/tv_feels_like"
+            android:layout_marginHorizontal="@dimen/extra_small_padding"
+            app:layout_constraintBottom_toBottomOf="@id/tv_wind_speed"
             app:layout_constraintEnd_toStartOf="@id/tv_humidity"
             app:layout_constraintStart_toEndOf="@id/tv_wind_speed"
-            app:layout_constraintTop_toTopOf="@id/tv_feels_like" />
+            app:layout_constraintTop_toTopOf="@id/tv_wind_speed" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_humidity"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@string/nan"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-            app:layout_constraintBottom_toBottomOf="@id/tv_feels_like"
+            app:layout_constraintBottom_toBottomOf="@id/tv_wind_speed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/divider1"
-            app:layout_constraintTop_toTopOf="@id/tv_feels_like"
+            app:layout_constraintTop_toTopOf="@id/tv_wind_speed"
             tools:text="Humidity 30%" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

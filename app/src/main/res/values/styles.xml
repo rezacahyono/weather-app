@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Card-->
-    <style name="Widget.Weather.Card.Elevated" parent="Widget.Material3.CardView.Elevated">
-        <item name="cardElevation">0.5dp</item>
-        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.ExtraLarge</item>
+    <style name="Widget.Weather.Card.Filled.Large" parent="Widget.Material3.CardView.Filled">
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Large</item>
+    </style>
+
+    <style name="Widget.Weather.Card.Filled.Medium" parent="Widget.Material3.CardView.Filled">
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Medium</item>
+    </style>
+
+    <style name="Widget.Weather.Card.Filled.Small" parent="Widget.Material3.CardView.Filled">
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Small</item>
     </style>
 
 </resources>
