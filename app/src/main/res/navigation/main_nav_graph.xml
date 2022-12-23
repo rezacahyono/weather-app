@@ -10,4 +10,14 @@
         android:name="com.rchyn.weather.ui.home.HomeFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/search_nav"
+        android:name="com.rchyn.weather.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/setting_nav"
+        android:name="com.rchyn.weather.ui.setting.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

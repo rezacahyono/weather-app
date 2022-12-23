@@ -5,7 +5,6 @@ import android.icu.util.Calendar
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
-import androidx.core.view.isVisible
 import com.rchyn.weather.R
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -22,8 +21,19 @@ fun checkNight(): Boolean {
     }
 }
 
-fun LocalDateTime.formatedTime(formated: String = "HH MMM yyyy"): String {
+fun LocalDateTime.formattedDate(formated: String = "dd MMM yyyy"): String {
     return this.format(DateTimeFormatter.ofPattern(formated))
+}
+
+fun LocalDateTime.formattedTimeNow(formated: String = "hh a", context: Context): String {
+    val now = LocalDateTime.now()
+    return if (this.hour == now.hour && this.dayOfWeek == now.dayOfWeek) {
+        context.getString(R.string.now)
+    } else {
+        this.formattedDate(
+            formated
+        ).cleanZero()
+    }
 }
 
 fun String.cleanZero(): String {

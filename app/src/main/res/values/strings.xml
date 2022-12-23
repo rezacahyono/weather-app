@@ -33,7 +33,8 @@
     <string name="icon_weather">Icon weather</string>
 
     <string name="temp">%s°</string>
-    <string name="today">Today | %s</string>
+    <string name="time">%s</string>
+    <string name="today">Today</string>
     <string name="feels_like">Feels like %s°</string>
     <string name="humidity">Humidity %s\%%</string>
     <string name="wind_speed">Wind speed %skm/h</string>
@@ -46,5 +47,15 @@
     <string name="setting">Setting</string>
     <string name="search">Search</string>
     <string name="home">Home</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="two_day_ago">2 day ago</string>
+    <string name="three_day_ago">3 day ago</string>
+    <string name="four_day_ago">4 day ago</string>
+    <string name="five_day_ago">5 day ago</string>
+    <string name="six_day_ago">6 day ago</string>
+    <string name="search_location">Search location</string>
+    <string name="recent">Recent</string>
+    <string name="clear_all">Clear all</string>
+    <string name="flag">Flag</string>
 
 </resources>

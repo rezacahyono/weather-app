@@ -13,4 +13,27 @@
         <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Small</item>
     </style>
 
+    <!--Search Bar-->
+    <style name="Widget.Weather.SearchBar" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="boxStrokeColor">@android:color/transparent</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="endIconMode">custom</item>
+        <item name="endIconDrawable">@drawable/ic_search</item>
+        <item name="hintEnabled">false</item>
+        <item name="hintAnimationEnabled">false</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Material3.Corner.Full</item>
+    </style>
+
+    <!--Chip-->
+    <style name="Widget.Weather.Chip.Elevated" parent="Widget.Material3.Chip.Assist.Elevated">
+        <item name="chipBackgroundColor">?attr/colorSurfaceVariant</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Large</item>
+    </style>
+
+    <!--Image-->
+    <style name="ShapeAppearance.Weather.Image.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

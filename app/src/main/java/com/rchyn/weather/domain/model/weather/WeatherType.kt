@@ -1,4 +1,4 @@
-package com.rchyn.weather.domain.model
+package com.rchyn.weather.domain.model.weather
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

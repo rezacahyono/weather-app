@@ -17,7 +17,7 @@
             android:layout_height="@dimen/line_height_medium"
             android:contentDescription="@string/placeholder"
             android:src="?attr/colorSecondaryContainer"
-            app:layout_constraintBottom_toTopOf="@id/placeholder_tv_temperature"
+            app:layout_constraintBottom_toTopOf="@id/placeholder_iv_icon_temperature"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
 
@@ -25,13 +25,14 @@
             android:id="@+id/placeholder_iv_icon_temperature"
             android:layout_width="@dimen/size_icon"
             android:layout_height="@dimen/size_icon"
+            android:layout_marginTop="@dimen/small_padding"
             android:layout_marginEnd="@dimen/small_padding"
             android:src="?attr/colorSecondaryContainer"
-            app:layout_constraintBottom_toBottomOf="@id/placeholder_tv_temperature"
+            app:layout_constraintBottom_toTopOf="@id/placeholder_tv_weather_desc"
             app:layout_constraintEnd_toStartOf="@id/placeholder_tv_temperature"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/placeholder_tv_temperature"
+            app:layout_constraintTop_toBottomOf="@id/placeholder_tv_date"
             app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -39,12 +40,11 @@
             android:layout_width="@dimen/line_height_double_extra_large"
             android:layout_height="@dimen/line_height_double_extra_large"
             android:layout_marginStart="@dimen/small_padding"
-            android:layout_marginTop="@dimen/small_padding"
             android:src="?attr/colorSecondaryContainer"
-            app:layout_constraintBottom_toTopOf="@id/placeholder_tv_weather_desc"
+            app:layout_constraintBottom_toBottomOf="@id/placeholder_iv_icon_temperature"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/placeholder_iv_icon_temperature"
-            app:layout_constraintTop_toBottomOf="@id/placeholder_tv_date"
+            app:layout_constraintTop_toTopOf="@id/placeholder_iv_icon_temperature"
             app:layout_goneMarginTop="@dimen/small_padding"
             app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
 
@@ -56,7 +56,7 @@
             android:contentDescription="@string/placeholder"
             android:src="?attr/colorSecondaryContainer"
             app:layout_constraintBottom_toTopOf="@id/placeholder_tv_location_name"
-            app:layout_constraintTop_toBottomOf="@id/placeholder_tv_temperature"
+            app:layout_constraintTop_toBottomOf="@id/placeholder_iv_icon_temperature"
             app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
 
         <com.google.android.material.imageview.ShapeableImageView
