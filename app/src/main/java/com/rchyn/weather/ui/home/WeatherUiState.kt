@@ -1,6 +1,6 @@
 package com.rchyn.weather.ui.home
 
-import com.rchyn.weather.domain.model.WeatherInfo
+import com.rchyn.weather.domain.model.weather.WeatherInfo
 
 data class WeatherUiState(
     val isLoading: Boolean = false,

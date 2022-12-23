@@ -1,8 +1,10 @@
 package com.rchyn.weather.di
 
 import androidx.viewbinding.BuildConfig
+import com.rchyn.weather.data.remote.service.LocationApi
 import com.rchyn.weather.data.remote.service.WeatherApi
 import com.rchyn.weather.utils.Constant.BASE_URL
+import com.rchyn.weather.utils.Constant.LOCATION_BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,4 +49,15 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
             .create(WeatherApi::class.java)
+
+
+    @Provides
+    @Singleton
+    fun provideLocationApi(okHttpClient: OkHttpClient): LocationApi =
+        Retrofit.Builder()
+            .baseUrl(LOCATION_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+            .create(LocationApi::class.java)
 }

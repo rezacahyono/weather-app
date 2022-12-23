@@ -2,13 +2,16 @@ package com.rchyn.weather.ui
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.toWindowInsetsCompat
+import androidx.core.view.isGone
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.elevation.SurfaceColors
 import com.rchyn.weather.R
 import com.rchyn.weather.databinding.ActivityMainBinding
@@ -48,5 +51,13 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.navController
+
+        binding.bottomNavigation.setupWithNavController(navController)
+
+        window.decorView.setOnApplyWindowInsetsListener { view, insets ->
+            val insetsCompat = toWindowInsetsCompat(insets, view)
+            binding.bottomNavigation.isGone = insetsCompat.isVisible(ime())
+            view.onApplyWindowInsets(insets)
+        }
     }
 }

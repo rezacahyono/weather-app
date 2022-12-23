@@ -1,10 +1,10 @@
-package com.rchyn.weather.data.mappers
+package com.rchyn.weather.data.mappers.weather
 
-import com.rchyn.weather.data.remote.dto.WeatherDataDto
-import com.rchyn.weather.data.remote.dto.WeatherDto
-import com.rchyn.weather.domain.model.WeatherData
-import com.rchyn.weather.domain.model.WeatherInfo
-import com.rchyn.weather.domain.model.WeatherType
+import com.rchyn.weather.data.remote.dto.weather.WeatherDataDto
+import com.rchyn.weather.data.remote.dto.weather.WeatherDto
+import com.rchyn.weather.domain.model.weather.WeatherData
+import com.rchyn.weather.domain.model.weather.WeatherInfo
+import com.rchyn.weather.domain.model.weather.WeatherType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -38,10 +38,10 @@ fun WeatherDataDto.toWeatherDataMap(lat: Double, lon: Double): Map<Int, List<Wea
     }.mapValues { weathers -> weathers.value.map { it.data } }
 }
 
-fun WeatherDto.toWeatherInfo(): WeatherInfo {
-    val weatherDataMap = weatherData.toWeatherDataMap(latitude, longitude)
+fun WeatherDto.toWeatherInfo(day: Int): WeatherInfo {
+    val weatherDataMap = weatherData.toWeatherDataMap(latitude, longitude).filterKeys { it == day }
     val now = LocalDateTime.now()
-    val currentWeatherData = weatherDataMap[0]?.find {
+    val currentWeatherData = weatherDataMap[day]?.find {
         val hour = if (now.minute < 30) now.hour else now.hour + 1
         it.time.hour == if (hour == 24) now.hour else hour
     }

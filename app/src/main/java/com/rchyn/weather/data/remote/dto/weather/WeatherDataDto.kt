@@ -1,4 +1,4 @@
-package com.rchyn.weather.data.remote.dto
+package com.rchyn.weather.data.remote.dto.weather
 
 import com.google.gson.annotations.SerializedName
 

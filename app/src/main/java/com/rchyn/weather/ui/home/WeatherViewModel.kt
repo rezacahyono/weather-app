@@ -1,10 +1,9 @@
 package com.rchyn.weather.ui.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rchyn.weather.domain.location.ILocationTracker
-import com.rchyn.weather.domain.repository.IWeatherRepository
+import com.rchyn.weather.domain.repository.weather.IWeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,6 +21,8 @@ class WeatherViewModel @Inject constructor(
     private val _weatherState: MutableStateFlow<WeatherUiState> = MutableStateFlow(WeatherUiState())
     val weatherState: StateFlow<WeatherUiState> = _weatherState.asStateFlow()
 
+    val day: MutableStateFlow<Int> = MutableStateFlow(0)
+
     fun loadWeatherByCurrentLocation() {
         viewModelScope.launch {
             _weatherState.update {
@@ -32,7 +33,7 @@ class WeatherViewModel @Inject constructor(
                 )
             }
             iLocationTracker.getCurrentLocation()?.let { location ->
-                iWeatherRepository.getWeatherData(location.latitude, location.longitude)
+                iWeatherRepository.getWeatherData(day.value, location.latitude, location.longitude)
                     .onSuccess { weatherInfo ->
                         _weatherState.update {
                             it.copy(
