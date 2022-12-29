@@ -5,8 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.decode.SvgDecoder
+import coil.load
 import com.rchyn.weather.databinding.ItemRowLocationBinding
 import com.rchyn.weather.domain.model.location.LocationData
+import com.rchyn.weather.utils.countryCodeToFlagUrl
+import com.rchyn.weather.utils.descriptionLocation
 
 class ListLocationAdapter(
     private val onClickItem: (LocationData) -> Unit
@@ -15,7 +19,21 @@ class ListLocationAdapter(
         private val binding: ItemRowLocationBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(locationData: LocationData) {
-            binding.tvTitleLocation.text = locationData.name
+            binding.apply {
+                ivCountryFlag.load(
+                    locationData.countryCode.countryCodeToFlagUrl()
+                ) {
+                    decoderFactory { result, options, _ ->
+                        SvgDecoder(result.source, options)
+                    }
+                }
+                tvTitleLocation.text = locationData.name
+                tvDescLocation.text = descriptionLocation(
+                    listOf(locationData.name, locationData.country, locationData.admin)
+                )
+
+                root.setOnClickListener { onClickItem(locationData) }
+            }
         }
 
     }

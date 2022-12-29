@@ -1,6 +1,7 @@
 package com.rchyn.weather.domain.model.weather
 
 data class WeatherInfo(
-    val weatherDataPerDay: Map<Int, List<WeatherData>>,
+    val weatherDataByDay: List<WeatherData>?,
+    val forecastWeatherData: Map<Int, WeatherData>,
     val currentWeatherData: WeatherData?
 )

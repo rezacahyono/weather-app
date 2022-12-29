@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rchyn.weather.R
 import com.rchyn.weather.databinding.ItemRowWeatherBinding
 import com.rchyn.weather.domain.model.weather.WeatherData
-import com.rchyn.weather.utils.formattedTimeNow
+import com.rchyn.weather.utils.cleanZero
+import com.rchyn.weather.utils.formattedDateNow
 
 class ListWeatherAdapter :
     ListAdapter<WeatherData, ListWeatherAdapter.ListWeatherViewHolder>(DiffCallback) {
@@ -21,10 +22,13 @@ class ListWeatherAdapter :
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(weatherData: WeatherData) {
             binding.apply {
-                tvDate.text = weatherData.time.formattedTimeNow(context = ctx)
+                tvDay.text = weatherData.time.formattedDateNow(context = ctx)
                 ivIconTemperature.setImageResource(weatherData.weatherType.iconRes)
                 tvTemperature.text =
-                    ctx.getString(R.string.temp, weatherData.temparatureCelsius.toString())
+                    ctx.getString(
+                        R.string.temp,
+                        weatherData.temparatureCelsius.toString().cleanZero()
+                    )
             }
         }
     }

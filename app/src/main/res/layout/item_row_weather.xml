@@ -2,52 +2,48 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Weather.Card.Outlined.Medium"
     android:layout_width="wrap_content"
-    style="@style/Widget.Weather.Card.Filled.Medium"
-    android:layout_margin="@dimen/small_padding"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/small_padding">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/small_padding">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-            app:layout_constraintBottom_toTopOf="@id/iv_icon_temperature"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/now" />
+        android:padding="@dimen/medium_padding">
 
         <ImageView
             android:id="@+id/iv_icon_temperature"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="@dimen/small_padding"
-            android:layout_marginEnd="2dp"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
             android:contentDescription="@string/icon_weather"
-            app:layout_constraintEnd_toStartOf="@id/tv_temperature"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_date"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/day_clouds" />
-
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-            app:layout_constraintBottom_toBottomOf="@id/iv_icon_temperature"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_icon_temperature"
-            app:layout_constraintTop_toTopOf="@id/iv_icon_temperature"
-            tools:text="25°" />
+            android:minWidth="48dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+            app:layout_constraintEnd_toEndOf="@id/iv_icon_temperature"
+            app:layout_constraintStart_toStartOf="@id/iv_icon_temperature"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon_temperature"
+            tools:text="25.4'C" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            app:layout_constraintEnd_toEndOf="@id/tv_temperature"
+            app:layout_constraintStart_toStartOf="@id/tv_temperature"
+            app:layout_constraintTop_toBottomOf="@id/tv_temperature"
+            tools:text="@string/today" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

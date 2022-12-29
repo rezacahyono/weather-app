@@ -5,5 +5,6 @@ data class LocationData(
     val latitude: Double,
     val name: String,
     val admin: String,
-    val country: String
+    val country: String,
+    val countryCode: String
 )

@@ -23,12 +23,15 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        sourceCompatibility =  JavaVersion.VERSION_1_8
-        targetCompatibility =  JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -49,8 +52,12 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
 
-    // AppC Compat
+    // App Compat
     implementation("androidx.appcompat:appcompat:1.5.1")
+
+    // Coil Image
+    implementation("io.coil-kt:coil:2.2.2")
+    implementation("io.coil-kt:coil-svg:2.2.2")
 
     // Material Design
     implementation("com.google.android.material:material:1.7.0")
@@ -58,6 +65,10 @@ dependencies {
     // Shimmer
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 
+    // Chart
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    // Maps
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
     // Constraint Layout

@@ -8,9 +8,14 @@
 
     <dimen name="line_height_small">8dp</dimen>
     <dimen name="line_height_medium">16dp</dimen>
+    <dimen name="line_height_extra_medium">20dp</dimen>
     <dimen name="line_height_large">24dp</dimen>
     <dimen name="line_height_double_extra_large">82dp</dimen>
 
-    <dimen name="size_icon">120dp</dimen>
-    <dimen name="size_icon_flag">40dp</dimen>
+
+    <dimen name="size_card_current_weather">150dp</dimen>
+    <dimen name="size_icon_large">180dp</dimen>
+    <dimen name="size_icon_small">34dp</dimen>
+
+    <dimen name="height_button_toogle_group">40dp</dimen>
 </resources>

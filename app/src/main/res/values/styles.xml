@@ -2,15 +2,17 @@
 <resources>
     <!--Card-->
     <style name="Widget.Weather.Card.Filled.Large" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">?attr/colorSecondaryContainer</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Large</item>
     </style>
 
     <style name="Widget.Weather.Card.Filled.Medium" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">?attr/colorSecondaryContainer</item>
         <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Medium</item>
     </style>
 
-    <style name="Widget.Weather.Card.Filled.Small" parent="Widget.Material3.CardView.Filled">
-        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Small</item>
+    <style name="Widget.Weather.Card.Outlined.Medium" parent="Widget.Material3.CardView.Outlined">
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Medium</item>
     </style>
 
     <!--Search Bar-->

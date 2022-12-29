@@ -9,8 +9,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_country_flag"
-        android:layout_width="@dimen/size_icon_flag"
-        android:layout_height="@dimen/size_icon_flag"
+        android:layout_width="@dimen/size_icon_small"
+        android:layout_height="@dimen/size_icon_small"
         android:contentDescription="@string/flag"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

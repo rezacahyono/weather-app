@@ -3,6 +3,7 @@ package com.rchyn.weather.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rchyn.weather.domain.location.ILocationTracker
+import com.rchyn.weather.domain.model.weather.Forecast
 import com.rchyn.weather.domain.repository.weather.IWeatherRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,7 @@ class WeatherViewModel @Inject constructor(
     val weatherState: StateFlow<WeatherUiState> = _weatherState.asStateFlow()
 
     val day: MutableStateFlow<Int> = MutableStateFlow(0)
+    val forecast: MutableStateFlow<Forecast> = MutableStateFlow(Forecast.FEELS_LIKE)
 
     fun loadWeatherByCurrentLocation() {
         viewModelScope.launch {

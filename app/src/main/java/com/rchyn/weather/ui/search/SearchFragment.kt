@@ -15,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import com.rchyn.weather.adapter.ListLocationAdapter
 import com.rchyn.weather.databinding.FragmentSearchBinding
 import com.rchyn.weather.domain.model.location.RecentLocation
@@ -33,7 +34,14 @@ class SearchFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        listLocationAdapter = ListLocationAdapter { }
+        listLocationAdapter = ListLocationAdapter {
+            Snackbar.make(
+                requireContext(),
+                binding.root,
+                it.latitude.toString(),
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
     }
 
     override fun onCreateView(
@@ -111,6 +119,11 @@ class SearchFragment : Fragment() {
         recents.forEach {
             val chipRecent = Chip(requireContext())
             chipRecent.text = it.name
+            chipRecent.setOnClickListener { v ->
+                val name = (v as Chip).text.toString()
+                binding.layoutSearchBar.searchLocation.setText(name)
+                searchLocationViewModel.loadLocationByName(name)
+            }
             binding.cgRecentLocation.addView(chipRecent)
         }
     }

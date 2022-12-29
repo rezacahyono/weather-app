@@ -2,28 +2,35 @@ package com.rchyn.weather.ui.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.view.isVisible
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.MPPointF
 import com.rchyn.weather.R
 import com.rchyn.weather.adapter.ListWeatherAdapter
 import com.rchyn.weather.databinding.FragmentHomeBinding
+import com.rchyn.weather.domain.model.weather.Forecast
 import com.rchyn.weather.domain.model.weather.WeatherData
 import com.rchyn.weather.ui.MainActivity
-import com.rchyn.weather.utils.formattedDate
-import com.rchyn.weather.utils.getLocationName
+import com.rchyn.weather.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalTime
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -33,7 +40,7 @@ class HomeFragment : Fragment() {
     private val weatherViewModel: WeatherViewModel by activityViewModels()
 
     private lateinit var act: MainActivity
-
+    private var weathersData: List<WeatherData> = emptyList()
     private lateinit var listWeatherAdapter: ListWeatherAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,18 +64,20 @@ class HomeFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 weatherViewModel.weatherState.collect { state ->
                     when {
-                        state.isLoading -> setupShimmerCardLoading(true)
-                        state.isError -> setupShimmerCardLoading(false)
+//                        state.isLoading -> setupShimmerLoading(true)
+//                        state.isError -> setupShimmerLoading(false)
                         state.weatherInfo != null -> {
+//                            setupShimmerLoading(false)
                             state.weatherInfo.currentWeatherData?.let { weatherData ->
-                                setupShimmerCardLoading(false)
                                 setupCurrentWeather(weatherData = weatherData)
                             }
 
-                            state.weatherInfo.weatherDataPerDay.values.forEach {
-
-                                listWeatherAdapter.submitList(it)
+                            state.weatherInfo.weatherDataByDay?.let { weathers ->
+                                weathersData = weathers
+                                setupLineChartForecast(weathers, weatherViewModel.forecast.value)
                             }
+
+                            listWeatherAdapter.submitList(state.weatherInfo.forecastWeatherData.values.toList())
                         }
                     }
                 }
@@ -82,60 +91,86 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-        setupRecyclerWeathers()
 
-        binding.layoutHomeToolbar.tvPickForecastDay.setOnClickListener { v ->
-            setupPopMenuForecastByDay(v)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                weatherViewModel.forecast.collect {
+                    setupLineChartForecast(weathersData, it)
+                }
+            }
         }
-    }
 
+        setupRecyclerForecastWeathers()
 
-    private fun setupCurrentWeather(weatherData: WeatherData) {
-        binding.cardCurrentWeather.apply {
-            tvDate.text = getString(R.string.time, weatherData.time.formattedDate())
-            ivIconTemperature.setImageResource(weatherData.weatherType.iconRes)
-            tvTemperature.text = getString(R.string.temp, weatherData.temparatureCelsius.toString())
-            tvWeatherDesc.text = getString(weatherData.weatherType.weatherDesc)
-            tvFeelsLike.text =
-                getString(R.string.feels_like, weatherData.feelsLikeCelsius.toInt().toString())
-            tvWindSpeed.text = getString(R.string.wind_speed, weatherData.windSpeed.toString())
-            @SuppressLint("StringFormatInvalid")
-            tvHumidity.text = getString(R.string.humidity, weatherData.humidity.toInt().toString())
-
-            tvLocationName.apply {
-                text = requireContext().getLocationName(weatherData.latitude, weatherData.longitude)
-                isVisible =
-                    requireContext().getLocationName(weatherData.latitude, weatherData.longitude)
-                        .isNotEmpty()
+        binding.btnGrpForecastToday.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btn_feels_like -> weatherViewModel.forecast.value = Forecast.FEELS_LIKE
+                    R.id.btn_wind_speed -> weatherViewModel.forecast.value = Forecast.WIND_SPEED
+                    R.id.btn_humidity -> weatherViewModel.forecast.value = Forecast.HUMIDITY
+                }
             }
         }
     }
 
-    private fun setupRecyclerWeathers() {
-        val gridLayoutManager =
-            GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
-        binding.recyclerWeather.apply {
-            layoutManager = gridLayoutManager
+    private fun setupCurrentWeather(weatherData: WeatherData) {
+        binding.layoutToolbarHome.toolbar.apply {
+            title = act.getLocationName(weatherData.latitude, weatherData.longitude)
+            subtitle = act.getLocationName(weatherData.latitude, weatherData.longitude, true)
+        }
+
+        binding.tvDate.text = weatherData.time.formattedDate()
+        binding.tvFilterDay.setOnClickListener { v ->
+            setupPopupMenuWeatherByDay(v)
+        }
+
+        binding.layoutCardCurrentWeather.apply {
+            ivIconTemperature.setImageResource(weatherData.weatherType.iconRes)
+            tvTemperature.text =
+                getString(R.string.temp, weatherData.temparatureCelsius.toString().cleanZero())
+            tvDescTemperature.text = getString(weatherData.weatherType.weatherDesc)
+        }
+
+        binding.menuFeelsLike.apply {
+            ivIconUtilities.setImageResource(R.drawable.ic_temp)
+            tvTitleUtilities.text = getString(R.string.feels_like)
+            tvUtilities.text =
+                getString(R.string.temp, weatherData.feelsLikeCelsius.toString().cleanZero())
+        }
+
+        binding.menuWindSpeed.apply {
+            ivIconUtilities.setImageResource(R.drawable.ic_wind)
+            tvTitleUtilities.text = getString(R.string.wind_speed)
+            tvUtilities.text =
+                getString(R.string.speed, weatherData.windSpeed.toString().cleanZero())
+        }
+
+        binding.menuHummidity.apply {
+            ivIconUtilities.setImageResource(R.drawable.ic_humidity)
+            tvTitleUtilities.text = getString(R.string.humidity)
+
+            @SuppressLint("StringFormatInvalid")
+            tvUtilities.text =
+                getString(R.string.percent, weatherData.humidity.toString().cleanZero())
+        }
+
+    }
+
+    private fun setupRecyclerForecastWeathers() {
+        val linearLayoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerForecast.apply {
+            layoutManager = linearLayoutManager
             adapter = listWeatherAdapter
         }
     }
 
-
-    private fun setupShimmerCardLoading(isShow: Boolean) {
-        binding.shimmerCardWeather.apply {
-            if (isShow) startShimmer() else stopShimmer()
-            isVisible = isShow
-            binding.cardCurrentWeather.root.isVisible = !isShow
-        }
-    }
-
-    private fun setupPopMenuForecastByDay(view: View) {
+    private fun setupPopupMenuWeatherByDay(view: View) {
         val popupMenu = PopupMenu(requireContext(), view)
-        popupMenu.menuInflater.inflate(R.menu.forecast_day_menu, popupMenu.menu)
-
         popupMenu.apply {
+            menuInflater.inflate(R.menu.weather_by_day_menu, popupMenu.menu)
             setOnMenuItemClickListener { menuItem: MenuItem ->
-                val day: Int = when (menuItem.itemId) {
+                weatherViewModel.day.value = when (menuItem.itemId) {
                     R.id.today -> 0
                     R.id.tomorrow -> 1
                     R.id.two_day_ago -> 2
@@ -145,7 +180,6 @@ class HomeFragment : Fragment() {
                     R.id.six_day_ago -> 6
                     else -> 0
                 }
-                weatherViewModel.day.value = day
                 weatherViewModel.loadWeatherByCurrentLocation()
                 true
             }
@@ -163,7 +197,122 @@ class HomeFragment : Fragment() {
             6 -> R.string.six_day_ago
             else -> R.string.today
         }
-        binding.layoutHomeToolbar.tvPickForecastDay.text = getString(titleDay)
+        binding.tvFilterDay.text = getString(titleDay)
+    }
+
+    private fun setupLineChartForecast(
+        weathers: List<WeatherData>,
+        forecast: Forecast
+    ) {
+        if (weathers.isEmpty()) return
+        val entry = weathers.map {
+            Entry(
+                it.time.hour.toFloat(),
+                when (forecast) {
+                    Forecast.FEELS_LIKE -> it.temparatureCelsius.toFloat()
+                    Forecast.WIND_SPEED -> it.windSpeed.toFloat()
+                    Forecast.HUMIDITY -> it.humidity.toFloat()
+                },
+                when (forecast) {
+                    Forecast.FEELS_LIKE -> ContextCompat.getDrawable(
+                        requireContext(),
+                        it.weatherType.iconResSmall
+                    )
+                    Forecast.WIND_SPEED -> ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_wind
+                    )
+                    Forecast.HUMIDITY -> ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_humidity
+                    )
+                }
+            )
+        }
+
+        val lineData = LineDataSet(entry, "").apply {
+            styleLineDataSet(this, forecast)
+        }.let {
+            LineData(it)
+        }
+
+        binding.lineChartForecast.apply {
+            data = lineData
+            styleLineChart(this)
+            invalidate()
+        }
+    }
+
+    private fun styleLineChart(lineChart: LineChart) = lineChart.apply {
+        extraRightOffset = 18f
+        extraLeftOffset = 18f
+        extraTopOffset = 45f
+        axisLeft.isEnabled = false
+        axisRight.isEnabled = false
+
+        val timeValueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                val localTime = LocalTime.of(value.toInt(), 0)
+                return localTime.formatterTimeNow(requireContext())
+            }
+        }
+
+        xAxis.apply {
+            axisMaximum = 23f
+            axisMinimum = 0f
+            setDrawGridLines(false)
+            setDrawAxisLine(false)
+            position = XAxis.XAxisPosition.BOTTOM
+            textColor =
+                requireContext().resolveColorAttr(com.google.android.material.R.attr.colorOnSurface)
+            valueFormatter = timeValueFormatter
+        }
+
+        setTouchEnabled(true)
+        isDragEnabled = true
+        setScaleEnabled(false)
+        setPinchZoom(false)
+        setScaleMinima(4f, 0f)
+        description = null
+        legend.isEnabled = false
+        animateX(500)
+    }
+
+    private fun styleLineDataSet(lineDataSet: LineDataSet, forecast: Forecast) = lineDataSet.apply {
+        color = requireContext().resolveColorAttr(androidx.appcompat.R.attr.colorPrimary)
+        valueTextColor =
+            requireContext().resolveColorAttr(com.google.android.material.R.attr.colorOnSurface)
+
+        valueTextSize = 12f
+
+
+        val tempValueFormatter = object : ValueFormatter() {
+            @SuppressLint("StringFormatInvalid")
+            override fun getFormattedValue(value: Float): String {
+                return when (forecast) {
+                    Forecast.FEELS_LIKE -> getString(R.string.temp, value.toString().cleanZero())
+                    Forecast.WIND_SPEED -> value.toString()
+                    Forecast.HUMIDITY -> getString(R.string.percent, value.toString())
+                }
+            }
+        }
+
+        valueFormatter = tempValueFormatter
+
+        iconsOffset = MPPointF(0f, -40f)
+        lineWidth = 2f
+        isHighlightEnabled = true
+        setDrawHorizontalHighlightIndicator(false)
+        setDrawVerticalHighlightIndicator(false)
+        setDrawCircles(true)
+        setDrawCircleHole(false)
+        setCircleColor(ContextCompat.getColor(requireContext(), android.R.color.transparent))
+        circleRadius = 6f
+        mode = LineDataSet.Mode.CUBIC_BEZIER
+
+        setDrawFilled(true)
+        fillDrawable =
+            ContextCompat.getDrawable(requireContext(), R.drawable.shape_bg_filled_line_chart)
     }
 
     override fun onDestroyView() {

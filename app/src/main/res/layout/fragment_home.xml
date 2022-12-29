@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/layout_home_toolbar"
-        layout="@layout/home_toolbar" />
+        android:id="@+id/layout_toolbar_home"
+        layout="@layout/toolbar_home" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -20,51 +20,226 @@
             android:layout_height="wrap_content"
             tools:context=".ui.home.HomeFragment">
 
-
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/shimmer_card_weather"
-                android:layout_width="match_parent"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_date"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/root_padding"
-                android:layout_marginTop="@dimen/small_padding"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@id/card_current_weather"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/nan"
+                android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                app:layout_constraintBottom_toBottomOf="@id/tv_filter_day"
+                app:layout_constraintEnd_toStartOf="@id/tv_filter_day"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="@id/tv_filter_day"
+                tools:text="Sunday, 12 August 2022" />
 
-                <include
-                    android:id="@+id/card_current_weather_shimmer"
-                    layout="@layout/card_current_weather_shimmer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.facebook.shimmer.ShimmerFrameLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_filter_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/root_padding"
+                android:layout_marginEnd="@dimen/root_padding"
+                android:drawablePadding="@dimen/small_padding"
+                android:gravity="center"
+                android:text="@string/today"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                app:drawableEndCompat="@drawable/ic_arrow_drop_down"
+                app:layout_constraintBottom_toTopOf="@id/layout_card_current_weather"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_date"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <include
-                android:id="@+id/card_current_weather"
+                android:id="@+id/layout_card_current_weather"
                 layout="@layout/card_current_weather"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_icon_large"
+                android:layout_marginHorizontal="@dimen/root_padding"
+                android:layout_marginTop="@dimen/medium_padding"
+                app:layout_constraintBottom_toTopOf="@id/menu_wind_speed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_filter_day" />
+
+            <include
+                android:id="@+id/menu_feels_like"
+                layout="@layout/layout_utilities_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/root_padding"
+                app:layout_constraintBottom_toBottomOf="@id/menu_wind_speed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/menu_wind_speed" />
+
+            <include
+                android:id="@+id/menu_wind_speed"
+                layout="@layout/layout_utilities_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium_padding"
+                app:layout_constraintEnd_toStartOf="@id/menu_hummidity"
+                app:layout_constraintStart_toEndOf="@id/menu_feels_like"
+                app:layout_constraintTop_toBottomOf="@id/layout_card_current_weather" />
+
+            <include
+                android:id="@+id/menu_hummidity"
+                layout="@layout/layout_utilities_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/root_padding"
+                app:layout_constraintBottom_toBottomOf="@id/menu_wind_speed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/menu_wind_speed" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/btn_grp_forecast_today"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_button_toogle_group"
+                android:layout_marginHorizontal="@dimen/root_padding"
+                android:layout_marginTop="@dimen/medium_padding"
+                android:gravity="center"
+                app:checkedButton="@id/btn_feels_like"
+                app:layout_constraintTop_toBottomOf="@id/menu_wind_speed"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_feels_like"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/feels_like"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelMedium" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_wind_speed"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="0dp"
+                    android:text="@string/wind_speed"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelMedium" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_humidity"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/humidity"
+                    android:textAppearance="@style/TextAppearance.Material3.LabelMedium" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/line_chart_forecast"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="@dimen/medium_padding"
+                app:layout_constraintBottom_toTopOf="@id/tv_title_forecast"
+                app:layout_constraintTop_toBottomOf="@id/btn_grp_forecast_today" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_title_forecast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/root_padding"
-                android:layout_marginTop="@dimen/small_padding"
-                app:layout_constraintTop_toBottomOf="@id/shimmer_card_weather" />
+                android:layout_marginTop="@dimen/medium_padding"
+                android:text="@string/forecast_5_day"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                app:layout_constraintTop_toBottomOf="@id/line_chart_forecast" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_weather"
+                android:id="@+id/recycler_forecast"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/large_padding"
                 android:clipToPadding="false"
-                android:overScrollMode="never"
-                android:paddingHorizontal="@dimen/root_padding"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/card_current_weather"
-                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                android:paddingHorizontal="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_forecast"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_row_weather"
-                tools:orientation="horizontal"
-                tools:spanCount="2" />
+                tools:orientation="horizontal" />
+
+
+            <!--            <com.facebook.shimmer.ShimmerFrameLayout-->
+            <!--                android:id="@+id/shimmer_card_weather"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginHorizontal="@dimen/root_padding"-->
+            <!--                android:layout_marginTop="@dimen/small_padding"-->
+            <!--                android:visibility="gone"-->
+            <!--                app:layout_constraintBottom_toTopOf="@id/card_current_weather"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent">-->
+
+            <!--                <include-->
+            <!--                    android:id="@+id/card_current_weather_shimmer"-->
+            <!--                    layout="@layout/card_current_weather_shimmer"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content" />-->
+
+            <!--            </com.facebook.shimmer.ShimmerFrameLayout>-->
+
+            <!--            <include-->
+            <!--                android:id="@+id/card_current_weather"-->
+            <!--                layout="@layout/card_current_weather"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginHorizontal="@dimen/root_padding"-->
+            <!--                android:layout_marginTop="@dimen/small_padding"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/shimmer_card_weather" />-->
+
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/recycler_weather"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/large_padding"-->
+            <!--                android:clipToPadding="false"-->
+            <!--                android:overScrollMode="never"-->
+            <!--                android:paddingHorizontal="12dp"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/card_current_weather"-->
+            <!--                tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+            <!--                tools:listitem="@layout/item_row_weather"-->
+            <!--                tools:orientation="horizontal"-->
+            <!--                tools:spanCount="2" />-->
+
+            <!--            <com.facebook.shimmer.ShimmerFrameLayout-->
+            <!--                android:id="@+id/shimmer_recycler_weather"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/large_padding"-->
+            <!--                android:visibility="gone"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/shimmer_card_weather">-->
+
+            <!--                <androidx.recyclerview.widget.RecyclerView-->
+            <!--                    android:id="@+id/recycler_placeholder_weather"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:clipToPadding="false"-->
+            <!--                    android:overScrollMode="never"-->
+            <!--                    android:paddingHorizontal="12dp"-->
+            <!--                    tools:itemCount="12"-->
+            <!--                    tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+            <!--                    tools:listitem="@layout/item_row_weather_shimmer"-->
+            <!--                    tools:orientation="horizontal"-->
+            <!--                    tools:spanCount="2" />-->
+            <!--            </com.facebook.shimmer.ShimmerFrameLayout>-->
+
+            <!--            <com.patrykandpatryk.vico.view.chart.ChartView-->
+            <!--                android:id="@+id/line_chart_weather"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/medium_padding"-->
+            <!--                app:chart="line"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/recycler_weather"-->
+            <!--                app:lineChartStyle="@style/Widget.Weather.LineChart"-->
+            <!--                app:showBottomAxis="true"-->
+            <!--                app:showStartAxis="false" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,12 +6,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowInsetsCompat.Type.ime
-import androidx.core.view.WindowInsetsCompat.toWindowInsetsCompat
-import androidx.core.view.isGone
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.elevation.SurfaceColors
 import com.rchyn.weather.R
 import com.rchyn.weather.databinding.ActivityMainBinding
@@ -52,12 +48,22 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.navController
 
-        binding.bottomNavigation.setupWithNavController(navController)
+        setupNavigateBottomAppbar(navController)
+    }
 
-        window.decorView.setOnApplyWindowInsetsListener { view, insets ->
-            val insetsCompat = toWindowInsetsCompat(insets, view)
-            binding.bottomNavigation.isGone = insetsCompat.isVisible(ime())
-            view.onApplyWindowInsets(insets)
+    private fun setupNavigateBottomAppbar(navController: NavController) {
+        binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->
+            return@setOnMenuItemClickListener when (menuItem.itemId) {
+                R.id.home_nav -> {
+                    navController.navigate(R.id.home_nav)
+                    true
+                }
+                R.id.setting_nav -> {
+                    navController.navigate(R.id.setting_nav)
+                    true
+                }
+                else -> false
+            }
         }
     }
 }

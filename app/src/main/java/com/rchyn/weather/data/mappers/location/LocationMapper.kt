@@ -8,15 +8,16 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 fun LocationDto.toLocationData(): List<LocationData> {
-    return this.results.map {
+    return this.results?.map {
         LocationData(
             longitude = it.longitude,
             latitude = it.latitude,
             name = it.name,
             admin = it.admin1 ?: "",
-            country = it.country
+            country = it.country,
+            countryCode = it.countryCode
         )
-    }
+    } ?: emptyList()
 }
 
 fun RecentLocationEntity.toRecentLocation(): RecentLocation {

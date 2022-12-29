@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Material3.CardView.Outlined"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/small_padding"
+    app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/small_padding">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_tv_date"
+            android:layout_width="54dp"
+            android:layout_height="@dimen/line_height_medium"
+            android:contentDescription="@string/placeholder"
+            android:src="?attr/colorSurfaceVariant"
+            app:layout_constraintBottom_toTopOf="@id/placeholder_iv_icon_temperature"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_iv_icon_temperature"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginTop="@dimen/small_padding"
+            android:layout_marginEnd="2dp"
+            android:contentDescription="@string/placeholder"
+            android:src="?attr/colorSurfaceVariant"
+            app:layout_constraintEnd_toStartOf="@id/placeholder_tv_temperature"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/placeholder_tv_date"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/placeholder_tv_temperature"
+            android:layout_width="34dp"
+            android:layout_height="@dimen/line_height_extra_medium"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/placeholder"
+            android:src="?attr/colorSurfaceVariant"
+            app:layout_constraintBottom_toBottomOf="@id/placeholder_iv_icon_temperature"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/placeholder_iv_icon_temperature"
+            app:layout_constraintTop_toTopOf="@id/placeholder_iv_icon_temperature"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

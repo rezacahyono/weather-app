@@ -7,5 +7,5 @@ data class LocationDto(
 	val generationtimeMs: Any,
 
 	@SerializedName("results")
-	val results: List<LocationDataDto>
+	val results: List<LocationDataDto>? = null
 )

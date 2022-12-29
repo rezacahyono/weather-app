@@ -32,14 +32,15 @@
     <string name="heavy_hail_thunder_storm">Heavy hail thunder storm</string>
     <string name="icon_weather">Icon weather</string>
 
-    <string name="temp">%s°</string>
-    <string name="time">%s</string>
+    <string name="temp">%s°C</string>
     <string name="today">Today</string>
-    <string name="feels_like">Feels like %s°</string>
-    <string name="humidity">Humidity %s\%%</string>
-    <string name="wind_speed">Wind speed %skm/h</string>
+    <string name="feels_like">Feels like</string>
+    <string name="percent">%s\%%</string>
+    <string name="humidity">Humidity</string>
+    <string name="speed">%skm/h</string>
+    <string name="wind_speed">Wind speed</string>
 
-    <string name="location_name">%s, %s</string>
+<!--    <string name="location_name">%s, %s</string>-->
 
     <string name="now">Now</string>
     <string name="nan">-</string>
@@ -57,5 +58,8 @@
     <string name="recent">Recent</string>
     <string name="clear_all">Clear all</string>
     <string name="flag">Flag</string>
+    <string name="location">Location</string>
+    <string name="add_weather_location">add weather location</string>
+    <string name="forecast_5_day">Forecast 5 Day</string>
 
 </resources>
