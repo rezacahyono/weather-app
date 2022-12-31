@@ -60,6 +60,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.layoutToolbarHome.root.addLiftOnScrollListener { _, backgroundColor ->
+            act.window.statusBarColor = backgroundColor
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 weatherViewModel.weatherState.collect { state ->
@@ -72,7 +76,7 @@ class HomeFragment : Fragment() {
                                 setupCurrentWeather(weatherData = weatherData)
                             }
 
-                            state.weatherInfo.weatherDataByDay?.let { weathers ->
+                            state.weatherInfo.weatherDataByDay.values.forEach { weathers ->
                                 weathersData = weathers
                                 setupLineChartForecast(weathers, weatherViewModel.forecast.value)
                             }

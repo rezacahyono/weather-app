@@ -39,8 +39,6 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        window.navigationBarColor = SurfaceColors.SURFACE_2.getColor(this)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
